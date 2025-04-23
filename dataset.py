@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader, random_split
+from typing import Any
 
 class BilingualDataset(Dataset):
 
@@ -76,9 +77,9 @@ class BilingualDataset(Dataset):
             "tgt_text": tgt_text,
         }
     
-    def casual_mask(size):
-        mask = torch.triu(torch.ones(1, size, size), diagonal=1).type(torch.int)
-        return mask == 0
+def casual_mask(size):
+    mask = torch.triu(torch.ones(1, size, size), diagonal=1).type(torch.int)
+    return mask == 0
             
 
 
