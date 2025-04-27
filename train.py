@@ -4,7 +4,7 @@ from torch.utils.data import Dataset, DataLoader, random_split
 
 from dataset import BilingualDataset, casual_mask
 from model import build_transformer
-import pandas as
+import pandas as pd
 
 from config import get_weights_file_path, get_config
 
@@ -42,14 +42,8 @@ def get_or_build_tokenizer(config, ds, lang):
 def get_ds(config):
     print(f"Loading dataset with config: {config['lang_src']}-{config['lang_tgt']}")
 
-    ds_raw = load_dataset(
-        'Helsinki-NLP/opus_books',
-        name=f"{config['lang_src']}-{config['lang_tgt']}",
-        split='train',
-        download_mode='force_redownload'
-    )
+    ds_raw = load_dataset('iwslt2017', 'iwslt2017-en-de', split='train')
 
-    ds_raw = pd.read_parquet("hf://datasets/Helsinki-NLP/opus_books/ca-de/train-00000-of-00001.parquet")
 
     # Build tokenizers
     tokenizer_src = get_or_build_tokenizer(config, ds_raw, config['lang_src'])
